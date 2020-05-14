@@ -3,11 +3,12 @@ import '../../App.less';
 import {Col} from "antd";
 import errorImage from '../../Assets/error-image.jpg'
 import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
+import {Link} from "react-router-dom";
 
 const imageSrc = 'https://image.tmdb.org/t/p/w300/'
 
 
-function SingleMovie(props) {
+function MediaCard(props) {
 
     const onError = (event) => {
         event.target.src = errorImage;
@@ -20,7 +21,7 @@ function SingleMovie(props) {
                 <img className="poster-image"
                      src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
                      onError={onError}/>
-                <h2>{props.data.title}</h2>
+                <h2><Link to={`/movie/${props.data.id}`}>{props.data.title}</Link></h2>
                 <p>{props.data.release_date}</p>
             </div>
         )
@@ -30,7 +31,7 @@ function SingleMovie(props) {
                 <img className="poster-image"
                      src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
                      onError={onError}/>
-                <h2>{props.data.name}</h2>
+                <h2><Link to={`/series/${props.data.id}`}>{props.data.name}</Link></h2>
                 <p>{props.data.first_air_date}</p>
             </div>
         )
@@ -45,4 +46,4 @@ function SingleMovie(props) {
     );
 }
 
-export default SingleMovie;
+export default MediaCard;

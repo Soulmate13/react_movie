@@ -1,4 +1,4 @@
-import {GET_SEARCHED_MOVIES, GET_SEARCHED_SERIES} from './actionsList';
+import {GET_SINGLE_MOVIE, GET_SINGLE_SERIES} from './actionsList';
 import {
     SUCCESS,
     REQUEST,
@@ -8,17 +8,18 @@ import {
 import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
 
 import axios from 'axios';
-import {searchActionGenerateUrl} from "../../Utils/functions";
+import {getDetailsActionGenerateUrl} from "../../Utils/functions";
+import {getPopular} from "./discover";
 
-export function getSearched(searchParams) {
+export function getDetails(searchParams) {
     return async (dispatch, getState) => {
         let actionType = null;
         switch (searchParams.mode) {
             case MOVIES_MODE:
-                actionType = GET_SEARCHED_MOVIES;
+                actionType = GET_SINGLE_MOVIE;
                 break;
             case SERIES_MODE:
-                actionType = GET_SEARCHED_SERIES;
+                actionType = GET_SINGLE_SERIES;
                 break;
             default:
                 break;
@@ -29,16 +30,16 @@ export function getSearched(searchParams) {
         })
 
         try {
-            let url = searchActionGenerateUrl(searchParams)
+            let url = getDetailsActionGenerateUrl(searchParams)
             const response = await axios.get(url);
-            console.log(response)
+            console.log(response.data)
             dispatch({
                 type: SUCCESS(actionType),
-                payload: {list: [...response.data.results], prevSearchParams: {query : searchParams.query, year: searchParams.year}, pageable: {page: response.data.page, total_results: response.data.total_results}}
+                payload: {data: {...response.data}}
             })
 
             return {
-                ...response.data.results
+                ...response.data
             };
 
         } catch (error) {
