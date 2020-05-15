@@ -26,10 +26,78 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// movies
+            <pre class="prettyprint source linenums"><code>/**
+ * Describes mode for searching or discovering movies
+ * @constant
+ * @type {string}
+ */
 export const MOVIES_MODE = "MOVIES_MODE"
 
 /**
+ * Describes url parts to append to search movie parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} query - The string, which is prepended to query parameter
+ */
+export const MOVIES_SEARCH_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/search/movie?',
+    apiPath: 'api_key=',
+    page: "&amp;page=",
+    year: "&amp;primary_release_year=",
+    otherSettings:'&amp;language=en-US&amp;include_adult=false&amp;include_video=false',
+    query:'&amp;query=',
+}
+
+/**
+ * Describes url parts to append to discover movie parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} genres - The string, which is prepended to the genres parameter
+ * @property {string} filterCriterion - The string, which is prepended to the filterCriterion parameter
+ */
+export const MOVIES_DISCOVER_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/discover/movie?',
+    apiPath: 'api_key=',
+    page: "&amp;page=",
+    year: "&amp;primary_release_year=",
+    otherSettings:'&amp;language=en-US&amp;include_adult=false&amp;include_video=false',
+    genres: '&amp;with_genres=',
+    filterCriterion: '&amp;sort_by=',
+}
+
+/**
+ * Describes url parts to append to single movie details parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} otherSettings - The string, which contains other search parameters
+ */
+export const MOVIES_GET_DETAILS_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/movie/',
+    apiPath: 'api_key=',
+    otherSettings:'&amp;language=en-US',
+}
+
+/**
+ * Describes mode for searching or discovering series
+ * @constant
+ * @type {string}
+ */
+export const SERIES_MODE = "SERIES_MODE"
+
+/**
+ * Describes url parts to append to search series parameters
  * @constant
  * @type {object}
  * @property {string} route - The string, which starts the search url
@@ -40,35 +108,6 @@ export const MOVIES_MODE = "MOVIES_MODE"
  * @property {string} query - The string, which is prepended to query parameter
  */
 
-
-export const MOVIES_SEARCH_URL_PARTS = {
-
-    route:'https://api.themoviedb.org/3/search/movie?',
-    apiPath: 'api_key=',
-    page: "&amp;page=",
-    year: "&amp;primary_release_year=",
-    otherSettings:'&amp;language=en-US&amp;include_adult=false&amp;include_video=false',
-    query:'&amp;query=',
-}
-export const MOVIES_DISCOVER_URL_PARTS = {
-    route:'https://api.themoviedb.org/3/discover/movie?',
-    apiPath: 'api_key=',
-    page: "&amp;page=",
-    year: "&amp;primary_release_year=",
-    otherSettings:'&amp;language=en-US&amp;include_adult=false&amp;include_video=false',
-    query:'&amp;query=',
-    genres: '&amp;with_genres=',
-    filterCriterion: '&amp;sort_by=',
-}
-
-export const MOVIES_GET_DETAILS_URL_PARTS = {
-    route:'https://api.themoviedb.org/3/movie/',
-    apiPath: 'api_key=',
-    otherSettings:'&amp;language=en-US',
-}
-
-//shows
-export const SERIES_MODE = "SERIES_MODE"
 export const SERIES_SEARCH_URL_PARTS = {
     route:'https://api.themoviedb.org/3/search/tv?',
     apiPath: 'api_key=',
@@ -77,6 +116,20 @@ export const SERIES_SEARCH_URL_PARTS = {
     otherSettings:'&amp;language=en-US&amp;',
     query:'&amp;query=',
 }
+
+/**
+ * Describes url parts to append to discover series parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} genres - The string, which is prepended to the genres parameter
+ * @property {string} filterCriterion - The string, which is prepended to the filterCriterion parameter
+ */
+
 export const SERIES_DISCOVER_URL_PARTS = {
     route:'https://api.themoviedb.org/3/discover/tv?',
     apiPath: 'api_key=',
@@ -87,12 +140,27 @@ export const SERIES_DISCOVER_URL_PARTS = {
     genres: '&amp;with_genres=',
     filterCriterion: '&amp;sort_by=',
 }
+
+/**
+ * Describes url parts to append to single series details parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} otherSettings - The string, which contains other search parameters
+ */
+
 export const SERIES_GET_DETAILS_URL_PARTS = {
     route: 'https://api.themoviedb.org/3/tv/',
     apiPath: 'api_key=',
     otherSettings:'&amp;language=en-US',
 }
-// filters
+
+/**
+ * Describes list of genres available for filtering
+ * @type {Array.&lt;{value: number, title: string}>}
+ * @constant
+ */
 
 export const genresList = [
     {
@@ -173,6 +241,12 @@ export const genresList = [
     }
 ]
 
+/**
+ * Describes list of filters for movies and series
+ * @type {Array.&lt;{value: string, title: string}>}
+ * @constant
+ */
+
 export const filterCriteria = [
     {
         value: "popularity.desc",
@@ -200,13 +274,13 @@ export const filterCriteria = [
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#FAILURE">FAILURE</a></li><li><a href="global.html#MOVIES_SEARCH_URL_PARTS">MOVIES_SEARCH_URL_PARTS</a></li><li><a href="global.html#REQUEST">REQUEST</a></li><li><a href="global.html#searchActionGenerateUrl">searchActionGenerateUrl</a></li><li><a href="global.html#SUCCESS">SUCCESS</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#FAILURE">FAILURE</a></li><li><a href="global.html#filterCriteria">filterCriteria</a></li><li><a href="global.html#genresList">genresList</a></li><li><a href="global.html#getSearched">getSearched</a></li><li><a href="global.html#MOVIES_DISCOVER_URL_PARTS">MOVIES_DISCOVER_URL_PARTS</a></li><li><a href="global.html#MOVIES_GET_DETAILS_URL_PARTS">MOVIES_GET_DETAILS_URL_PARTS</a></li><li><a href="global.html#MOVIES_MODE">MOVIES_MODE</a></li><li><a href="global.html#MOVIES_SEARCH_URL_PARTS">MOVIES_SEARCH_URL_PARTS</a></li><li><a href="global.html#REQUEST">REQUEST</a></li><li><a href="global.html#searchActionGenerateUrl">searchActionGenerateUrl</a></li><li><a href="global.html#SERIES_DISCOVER_URL_PARTS">SERIES_DISCOVER_URL_PARTS</a></li><li><a href="global.html#SERIES_GET_DETAILS_URL_PARTS">SERIES_GET_DETAILS_URL_PARTS</a></li><li><a href="global.html#SERIES_MODE">SERIES_MODE</a></li><li><a href="global.html#SERIES_SEARCH_URL_PARTS">SERIES_SEARCH_URL_PARTS</a></li><li><a href="global.html#SUCCESS">SUCCESS</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri May 15 2020 13:56:29 GMT+0300 (GMT+03:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.4</a> on Fri May 15 2020 16:55:12 GMT+0300 (GMT+03:00)
 </footer>
 
 <script> prettyPrint(); </script>

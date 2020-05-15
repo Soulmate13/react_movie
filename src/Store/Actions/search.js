@@ -5,7 +5,7 @@ import {
     FAILURE
 } from '../constants';
 
-import {MOVIES_MODE, MOVIES_SEARCH_URL_PARTS, SERIES_MODE} from "../../Utils/constants";
+import {MOVIES_MODE, MOVIES_SEARCH_URL_PARTS, SERIES_SEARCH_URL_PARTS, SERIES_MODE} from "../../Utils/constants";
 
 import axios from 'axios';
 import {searchActionGenerateUrl} from "../../Utils/functions";
@@ -20,12 +20,15 @@ export function getSearched(searchParams) {
 
     return async (dispatch) => {
         let actionType = null;
+        let URL_PARTS = null;
         switch (searchParams.mode) {
             case MOVIES_MODE:
                 actionType = GET_SEARCHED_MOVIES;
+                URL_PARTS = MOVIES_SEARCH_URL_PARTS;
                 break;
             case SERIES_MODE:
                 actionType = GET_SEARCHED_SERIES;
+                URL_PARTS = SERIES_SEARCH_URL_PARTS;
                 break;
             default:
                 break;
@@ -36,7 +39,7 @@ export function getSearched(searchParams) {
         })
 
         try {
-            let url = searchActionGenerateUrl(searchParams, MOVIES_SEARCH_URL_PARTS)
+            let url = searchActionGenerateUrl(searchParams, URL_PARTS)
             const response = await axios.get(url);
             dispatch({
                 type: SUCCESS(actionType),

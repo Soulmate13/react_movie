@@ -1,8 +1,6 @@
 import {
-    GET_POPULAR_MOVIES,
     GET_POPULAR_SERIES,
     GET_SEARCHED_SERIES,
-    GET_SINGLE_MOVIE,
     GET_SINGLE_SERIES
 } from '../Actions/actionsList';
 

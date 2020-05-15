@@ -2,7 +2,6 @@ import {
     MOVIES_MODE,
     SERIES_MODE,
     MOVIES_DISCOVER_URL_PARTS,
-    SERIES_SEARCH_URL_PARTS,
     SERIES_DISCOVER_URL_PARTS, MOVIES_GET_DETAILS_URL_PARTS, SERIES_GET_DETAILS_URL_PARTS
 } from "./constants";
 
@@ -11,33 +10,34 @@ import {
  * Takes url search parameters and corresponding API strings and generates request url via concatenation,
  * differentiating between movies and seres with the help of the mode parameter
  * @param {object} searchParams - Contains parameter parts of the url and operating mode (movies or series)
- * @param {object} MOVIES_SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url
+ * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url
  * @returns {string} A concatenated string representing search url
  */
 
-
-export function searchActionGenerateUrl(searchParams,MOVIES_SEARCH_URL_PARTS) {
+export function searchActionGenerateUrl(searchParams,SEARCH_URL_PARTS) {
 
     switch (searchParams.mode) {
 
         case MOVIES_MODE: {
             let url;
-            const route = MOVIES_SEARCH_URL_PARTS.route
-            const page = MOVIES_SEARCH_URL_PARTS.page + searchParams.page;
-            const year = MOVIES_SEARCH_URL_PARTS.year + searchParams.year;
-            const otherSettings = MOVIES_SEARCH_URL_PARTS.otherSettings;
-            const query = MOVIES_SEARCH_URL_PARTS.query + searchParams.query;
-            const apiKey = MOVIES_SEARCH_URL_PARTS.apiPath + process.env.REACT_APP_API_KEY;
+            const route = SEARCH_URL_PARTS.route
+            const apiKey = SEARCH_URL_PARTS.apiPath + process.env.REACT_APP_API_KEY;
+            const page = SEARCH_URL_PARTS.page + searchParams.page;
+            const year = SEARCH_URL_PARTS.year + searchParams.year;
+            const otherSettings = SEARCH_URL_PARTS.otherSettings;
+            const query = SEARCH_URL_PARTS.query + searchParams.query;
             url = route + apiKey + page + year + otherSettings + query;
             return url
         }
         case SERIES_MODE: {
             let url;
-            const page = SERIES_SEARCH_URL_PARTS.page + searchParams.page;
-            const apiPath = SERIES_SEARCH_URL_PARTS.apiPath;
-            const year = SERIES_SEARCH_URL_PARTS.year + searchParams.year;
-            const query = SERIES_SEARCH_URL_PARTS.query + searchParams.query;
-            url = SERIES_SEARCH_URL_PARTS.route + apiPath + process.env.REACT_APP_API_KEY + page + year + SERIES_SEARCH_URL_PARTS.otherSettings + query;
+            const route = SEARCH_URL_PARTS.route
+            const page = SEARCH_URL_PARTS.page + searchParams.page;
+            const apiKey = SEARCH_URL_PARTS.apiPath + process.env.REACT_APP_API_KEY;
+            const year = SEARCH_URL_PARTS.year + searchParams.year;
+            const otherSettings = SEARCH_URL_PARTS.otherSettings;
+            const query = SEARCH_URL_PARTS.query + searchParams.query;
+            url = route + apiKey + page + year + otherSettings + query;
             return url
         }
         default:

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {DatePicker, Input, Layout, Menu, Pagination, Row, Select} from 'antd';
+import {DatePicker, Layout, Menu, Pagination, Row, Select} from 'antd';
 import '../../App.less';
 import FooterCustom from "../../Layout/ContentCustom/FooterCustom/FooterCustom";
 import {connect} from "react-redux";

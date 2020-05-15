@@ -1,7 +1,75 @@
-// movies
+/**
+ * Describes mode for searching or discovering movies
+ * @constant
+ * @type {string}
+ */
 export const MOVIES_MODE = "MOVIES_MODE"
 
 /**
+ * Describes url parts to append to search movie parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} query - The string, which is prepended to query parameter
+ */
+export const MOVIES_SEARCH_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/search/movie?',
+    apiPath: 'api_key=',
+    page: "&page=",
+    year: "&primary_release_year=",
+    otherSettings:'&language=en-US&include_adult=false&include_video=false',
+    query:'&query=',
+}
+
+/**
+ * Describes url parts to append to discover movie parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} genres - The string, which is prepended to the genres parameter
+ * @property {string} filterCriterion - The string, which is prepended to the filterCriterion parameter
+ */
+export const MOVIES_DISCOVER_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/discover/movie?',
+    apiPath: 'api_key=',
+    page: "&page=",
+    year: "&primary_release_year=",
+    otherSettings:'&language=en-US&include_adult=false&include_video=false',
+    genres: '&with_genres=',
+    filterCriterion: '&sort_by=',
+}
+
+/**
+ * Describes url parts to append to single movie details parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} otherSettings - The string, which contains other search parameters
+ */
+export const MOVIES_GET_DETAILS_URL_PARTS = {
+    route:'https://api.themoviedb.org/3/movie/',
+    apiPath: 'api_key=',
+    otherSettings:'&language=en-US',
+}
+
+/**
+ * Describes mode for searching or discovering series
+ * @constant
+ * @type {string}
+ */
+export const SERIES_MODE = "SERIES_MODE"
+
+/**
+ * Describes url parts to append to search series parameters
  * @constant
  * @type {object}
  * @property {string} route - The string, which starts the search url
@@ -12,34 +80,6 @@ export const MOVIES_MODE = "MOVIES_MODE"
  * @property {string} query - The string, which is prepended to query parameter
  */
 
-export const MOVIES_SEARCH_URL_PARTS = {
-
-    route:'https://api.themoviedb.org/3/search/movie?',
-    apiPath: 'api_key=',
-    page: "&page=",
-    year: "&primary_release_year=",
-    otherSettings:'&language=en-US&include_adult=false&include_video=false',
-    query:'&query=',
-}
-export const MOVIES_DISCOVER_URL_PARTS = {
-    route:'https://api.themoviedb.org/3/discover/movie?',
-    apiPath: 'api_key=',
-    page: "&page=",
-    year: "&primary_release_year=",
-    otherSettings:'&language=en-US&include_adult=false&include_video=false',
-    query:'&query=',
-    genres: '&with_genres=',
-    filterCriterion: '&sort_by=',
-}
-
-export const MOVIES_GET_DETAILS_URL_PARTS = {
-    route:'https://api.themoviedb.org/3/movie/',
-    apiPath: 'api_key=',
-    otherSettings:'&language=en-US',
-}
-
-//shows
-export const SERIES_MODE = "SERIES_MODE"
 export const SERIES_SEARCH_URL_PARTS = {
     route:'https://api.themoviedb.org/3/search/tv?',
     apiPath: 'api_key=',
@@ -48,6 +88,20 @@ export const SERIES_SEARCH_URL_PARTS = {
     otherSettings:'&language=en-US&',
     query:'&query=',
 }
+
+/**
+ * Describes url parts to append to discover series parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} page - The string, which is prepended to the page parameter
+ * @property {string} year - The string, which is prepended to the year parameter
+ * @property {string} otherSettings - The string, which contains other search parameters
+ * @property {string} genres - The string, which is prepended to the genres parameter
+ * @property {string} filterCriterion - The string, which is prepended to the filterCriterion parameter
+ */
+
 export const SERIES_DISCOVER_URL_PARTS = {
     route:'https://api.themoviedb.org/3/discover/tv?',
     apiPath: 'api_key=',
@@ -58,12 +112,27 @@ export const SERIES_DISCOVER_URL_PARTS = {
     genres: '&with_genres=',
     filterCriterion: '&sort_by=',
 }
+
+/**
+ * Describes url parts to append to single series details parameters
+ * @constant
+ * @type {object}
+ * @property {string} route - The string, which starts the search url
+ * @property {string} apiPath - The string, which is prepended to the api key
+ * @property {string} otherSettings - The string, which contains other search parameters
+ */
+
 export const SERIES_GET_DETAILS_URL_PARTS = {
     route: 'https://api.themoviedb.org/3/tv/',
     apiPath: 'api_key=',
     otherSettings:'&language=en-US',
 }
-// filters
+
+/**
+ * Describes list of genres available for filtering
+ * @type {Array.<{value: number, title: string}>}
+ * @constant
+ */
 
 export const genresList = [
     {
@@ -143,6 +212,12 @@ export const genresList = [
         title: "Western"
     }
 ]
+
+/**
+ * Describes list of filters for movies and series
+ * @type {Array.<{value: string, title: string}>}
+ * @constant
+ */
 
 export const filterCriteria = [
     {

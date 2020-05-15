@@ -9,7 +9,6 @@ import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
 
 import axios from 'axios';
 import {getDetailsActionGenerateUrl} from "../../Utils/functions";
-import {getPopular} from "./discover";
 
 export function getDetails(searchParams) {
     return async (dispatch, getState) => {
