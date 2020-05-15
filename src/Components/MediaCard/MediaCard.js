@@ -20,7 +20,7 @@ function MediaCard(props) {
             <div>
                 <img className="poster-image"
                      src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
-                     onError={onError}/>
+                     onError={onError} alt="movie poster"/>
                 <h2><Link to={`/movie/${props.data.id}`}>{props.data.title}</Link></h2>
                 <p>{props.data.release_date}</p>
             </div>
@@ -30,7 +30,7 @@ function MediaCard(props) {
             <div>
                 <img className="poster-image"
                      src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
-                     onError={onError}/>
+                     onError={onError} alt="movie poster"/>
                 <h2><Link to={`/series/${props.data.id}`}>{props.data.name}</Link></h2>
                 <p>{props.data.first_air_date}</p>
             </div>
