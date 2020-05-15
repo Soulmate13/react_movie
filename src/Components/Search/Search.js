@@ -34,12 +34,16 @@ class Search extends Component {
                     yearObj: this.props.movies.searchedMovies.prevSearchParams.yearObj,
                     query: this.props.movies.searchedMovies.prevSearchParams.query
                 })
+                break;
             case SERIES_MODE:
                 this.setState({
                     year: this.props.series.searchedSeries.prevSearchParams.year,
                     yearObj: this.props.series.searchedSeries.prevSearchParams.yearObj,
                     query: this.props.series.searchedSeries.prevSearchParams.query
                 })
+                break;
+            default:
+                break;
 
         }
 
