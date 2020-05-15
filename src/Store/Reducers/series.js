@@ -48,6 +48,11 @@ const initialState = {
             page: 1,
             total_results: 0
         },
+        prevSearchParams : {
+            query: "",
+            year: null,
+            yearObj: null
+        },
     },
     popularSeries: {
         isFetching: false,
@@ -80,7 +85,7 @@ export default function (state = initialState, action) {
 
         case SUCCESS(GET_SEARCHED_SERIES):
             return Object.assign({}, state, {
-                searchedSeries: {...state.searchedSeries, list: [...action.payload.list], pageable: {...action.payload.pageable}, isFetching: false, didInvalidate: false,},
+                searchedSeries: {...state.searchedSeries, list: [...action.payload.list], pageable: {...action.payload.pageable}, prevSearchParams: {...action.payload.prevSearchParams}, isFetching: false, didInvalidate: false,},
             });
 
         case FAILURE(GET_SEARCHED_SERIES):

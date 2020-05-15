@@ -33,7 +33,8 @@ const initialState = {
         didInvalidate: false,
         prevSearchParams : {
             query: "",
-            year: ""
+            year: null,
+            yearObj: null
         },
         list: [],
         pageable: {

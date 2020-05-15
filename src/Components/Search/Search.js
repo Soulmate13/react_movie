@@ -15,7 +15,8 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: moment().year(2020),
+            year: null,
+            yearObj: null,
             query: "",
         }
 
@@ -26,26 +27,49 @@ class Search extends Component {
     }
 
     setPrevSearchParams() {
-        this.setState({
-            year: this.props.movies.searchedMovies.prevSearchParams.year,
-            query: this.props.movies.searchedMovies.prevSearchParams.query
-        })
+        switch (this.props.mode) {
+            case MOVIES_MODE:
+                this.setState({
+                    year: this.props.movies.searchedMovies.prevSearchParams.year,
+                    yearObj: this.props.movies.searchedMovies.prevSearchParams.yearObj,
+                    query: this.props.movies.searchedMovies.prevSearchParams.query
+                })
+            case SERIES_MODE:
+                this.setState({
+                    year: this.props.series.searchedSeries.prevSearchParams.year,
+                    yearObj: this.props.series.searchedSeries.prevSearchParams.yearObj,
+                    query: this.props.series.searchedSeries.prevSearchParams.query
+                })
+
+        }
+
     }
 
     generateSearchParams = () => {
         return {
             page: "",
             year: this.state.year,
+            yearObj: this.state.yearObj,
             query:this.state.query,
             mode: this.props.mode
         }
     }
 
     changeYearHandler = (date) => {
-        let year = moment(date).format('YYYY');
-        this.setState({
-            year: year
-        }, this.state.query.length >= 2 ? this.onSearch : null)
+        console.log(date)
+        if (date === null) {
+            this.setState({
+                year: "",
+                yearObj: null,
+            }, this.state.query.length >= 2 ? this.onSearch : null)
+        } else {
+            let year = moment(date).format('YYYY');
+            this.setState({
+                year: year,
+                yearObj: date
+            },this.state.query.length >= 2 ? this.onSearch : null)
+        }
+
     }
 
     onSearch = () => {
@@ -78,7 +102,7 @@ class Search extends Component {
                         style={{height: '100%', borderRight: 0}}
                     >
                         <Menu.Item>
-                            <YearPicker onChange={this.changeYearHandler}/>
+                            <YearPicker onChange={this.changeYearHandler} value={this.state.yearObj ? moment(this.state.yearObj, 'YYYY') : null}/>
                         </Menu.Item>
                     </Menu>
                 </Sider>
