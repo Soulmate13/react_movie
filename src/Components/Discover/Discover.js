@@ -17,8 +17,8 @@ class Discover extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: "",
-            query: "",
+            year: null,
+            yearObj: null,
             genres: [],
             filterCriterion: "popularity.desc"
         }
@@ -26,48 +26,68 @@ class Discover extends Component {
     }
 
     componentDidMount() {
-        this.checkListPresence();
+        this.setPrevSearchParams();
     }
 
-    checkListPresence = () => {
+    setPrevSearchParams() {
         switch (this.props.mode) {
             case MOVIES_MODE:
-                if (this.props.movies.popularMovies.list.length === 0) {
-                    this.onDiscover();
-                }
+                this.setState({
+                    year: this.props.movies.popularMovies.prevSearchParams.year,
+                    yearObj: this.props.movies.popularMovies.prevSearchParams.yearObj,
+                    genres: this.props.movies.popularMovies.prevSearchParams.genres,
+                    filterCriterion: this.props.movies.popularMovies.prevSearchParams.filterCriterion
+                }, this.onDiscover)
                 break;
             case SERIES_MODE:
-                if (this.props.series.popularSeries.list.length === 0) {
-                    this.onDiscover();
-                }
+                this.setState({
+                    year: this.props.series.popularSeries.prevSearchParams.year,
+                    yearObj: this.props.series.popularSeries.prevSearchParams.yearObj,
+                    genres: this.props.series.popularSeries.prevSearchParams.genres,
+                    filterCriterion: this.props.series.popularSeries.prevSearchParams.filterCriterion
+                }, this.onDiscover)
                 break;
             default:
                 break;
+
         }
     }
 
     generateSearchParams = () => {
         return {
-            page: "",
+            page: this.props.mode === MOVIES_MODE ? this.props.movies.popularMovies.pageable.page : this.props.series.popularSeries.pageable.page,
             year: this.state.year,
-            query: this.state.query,
+            yearObj: this.state.yearObj,
             genres: this.state.genres,
             filterCriterion: this.state.filterCriterion,
             mode: this.props.mode
         }
     }
 
-    onDiscover = () => {
+    onNewDiscover = () => {
         const searchParams = this.generateSearchParams();
         searchParams.page = 1;
         this.props.getPopular(searchParams);
     }
 
+    onDiscover = () => {
+        const searchParams = this.generateSearchParams();
+        this.props.getPopular(searchParams);
+    }
+
     changeYearHandler = (date) => {
-        let year = moment(date).format('YYYY');
-        this.setState({
-            year: year
-        }, this.onDiscover)
+        if (date === null) {
+            this.setState({
+                year: "",
+                yearObj: null,
+            }, this.onNewDiscover)
+        } else {
+            let year = moment(date).format('YYYY');
+            this.setState({
+                year: year,
+                yearObj: date
+            },this.onNewDiscover)
+        }
     }
 
     onPageChange = (pageNum) => {
@@ -79,18 +99,18 @@ class Discover extends Component {
     onGenreAdd = (option) => {
         let currentGenres = this.state.genres;
         currentGenres.push(option);
-        this.setState({genres: currentGenres}, this.onDiscover);
+        this.setState({genres: currentGenres}, this.onNewDiscover);
 
     }
 
     onGenreRemove = (option) => {
         let currentGenres = this.state.genres;
         let filteredGenres = currentGenres.filter(genre => genre !== option);
-        this.setState({genres: filteredGenres}, this.onDiscover)
+        this.setState({genres: filteredGenres}, this.onNewDiscover)
     }
 
     onFilterSelect = (option) => {
-        this.setState({filterCriterion: option}, this.onDiscover)
+        this.setState({filterCriterion: option}, this.onNewDiscover)
     }
 
 
@@ -104,10 +124,10 @@ class Discover extends Component {
                         className="sider-menu"
                     >
                         <Menu.Item>
-                            <YearPicker onChange={this.changeYearHandler}/>
+                            <YearPicker onChange={this.changeYearHandler} value={this.state.yearObj ? moment(this.state.yearObj, 'YYYY') : null}/>
                         </Menu.Item>
                         <Menu.Item>
-                           <Select placeholder="Select genres" mode="multiple" allowClear={false}  style={{ width: '100%' }} showArrow={true} onSelect={this.onGenreAdd} onDeselect={this.onGenreRemove} optionFilterProp="key">
+                           <Select placeholder="Select genres" mode="multiple" allowClear={false}  value={this.state.genres} style={{ width: '100%' }} showArrow={true} onSelect={this.onGenreAdd} onDeselect={this.onGenreRemove} optionFilterProp="key">
                                {genresList.map(genre => {
                                    return <Option key={genre.title} value={genre.value}>{genre.title}</Option>
                                })}

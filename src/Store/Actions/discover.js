@@ -34,7 +34,8 @@ export function getPopular(searchParams) {
             console.log(response)
             dispatch({
                 type: SUCCESS(actionType),
-                payload: {list: [...response.data.results], pageable: {page: response.data.page, total_results: response.data.total_results}}
+                payload: {list: [...response.data.results], prevSearchParams: {year: searchParams.year, yearObj: searchParams.yearObj, genres: searchParams.genres, filterCriterion: searchParams.filterCriterion},
+                pageable: {page: response.data.page, total_results: response.data.total_results}}
             })
 
             return {

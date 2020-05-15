@@ -44,22 +44,20 @@ export function discoverActionGenerateUrl(searchParams) {
             let url;
             const page = MOVIES_DISCOVER_URL_PARTS.page + searchParams.page;
             const year = MOVIES_DISCOVER_URL_PARTS.year + searchParams.year;
-            const query = MOVIES_DISCOVER_URL_PARTS.query + searchParams.query;
             const apiPath = MOVIES_DISCOVER_URL_PARTS.apiPath;
             const genres = MOVIES_DISCOVER_URL_PARTS.genres + searchParams.genres.toString();
             const filterCriterion = MOVIES_DISCOVER_URL_PARTS.filterCriterion + searchParams.filterCriterion
-            url = MOVIES_DISCOVER_URL_PARTS.route + apiPath + process.env.REACT_APP_API_KEY + page + year + MOVIES_DISCOVER_URL_PARTS.otherSettings + genres + filterCriterion + query;
+            url = MOVIES_DISCOVER_URL_PARTS.route + apiPath + process.env.REACT_APP_API_KEY + page + year + MOVIES_DISCOVER_URL_PARTS.otherSettings + genres + filterCriterion;
             return url
         }
         case SERIES_MODE: {
             let url;
             const page = SERIES_DISCOVER_URL_PARTS.page + searchParams.page;
             const year = SERIES_DISCOVER_URL_PARTS.year + searchParams.year;
-            const query = SERIES_DISCOVER_URL_PARTS.query + searchParams.query;
             const apiPath = SERIES_DISCOVER_URL_PARTS.apiPath;
             const genres = SERIES_DISCOVER_URL_PARTS.genres + searchParams.genres.toString();
             const filterCriterion = SERIES_DISCOVER_URL_PARTS.filterCriterion + searchParams.filterCriterion
-            url = SERIES_DISCOVER_URL_PARTS.route + apiPath + process.env.REACT_APP_API_KEY + page + year + MOVIES_DISCOVER_URL_PARTS.otherSettings + genres + filterCriterion + query;
+            url = SERIES_DISCOVER_URL_PARTS.route + apiPath + process.env.REACT_APP_API_KEY + page + year + MOVIES_DISCOVER_URL_PARTS.otherSettings + genres + filterCriterion;
             console.log(url)
             return url
         }

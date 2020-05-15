@@ -62,6 +62,12 @@ const initialState = {
             page: 1,
             total_results: 0
         },
+        prevSearchParams : {
+            year: null,
+            yearObj: null,
+            genres: [],
+            filterCriterion:"popularity.desc"
+        },
     },
     favouriteSeries: {
         isFetching: false,
@@ -100,7 +106,7 @@ export default function (state = initialState, action) {
 
         case SUCCESS(GET_POPULAR_SERIES):
             return Object.assign({}, state, {
-                popularSeries: {...state.popularSeries, list: [...action.payload.list], pageable: {...action.payload.pageable}, isFetching: false, didInvalidate: false}
+                popularSeries: {...state.popularSeries, list: [...action.payload.list], prevSearchParams: {...action.payload.prevSearchParams}, pageable: {...action.payload.pageable}, isFetching: false, didInvalidate: false}
             });
 
         case FAILURE(GET_POPULAR_SERIES):

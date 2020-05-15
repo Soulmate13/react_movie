@@ -46,7 +46,6 @@ class Search extends Component {
                 break;
 
         }
-
     }
 
     generateSearchParams = () => {
@@ -60,7 +59,6 @@ class Search extends Component {
     }
 
     changeYearHandler = (date) => {
-        console.log(date)
         if (date === null) {
             this.setState({
                 year: "",
