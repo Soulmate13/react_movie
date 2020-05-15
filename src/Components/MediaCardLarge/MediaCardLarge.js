@@ -10,7 +10,7 @@ const imageSrc = 'https://image.tmdb.org/t/p/w300/'
 
 
 function MediaCardLarge(props) {
-
+    const {getDetails} = props;
     const onError = (event) => {
         event.target.src = errorImage;
     }
@@ -31,8 +31,8 @@ function MediaCardLarge(props) {
 
     useEffect(() => {
         const searchParams = generateSearchParams();
-        props.getDetails(searchParams);
-    }, [])
+        getDetails(searchParams);
+    }, [getDetails])
 
     let mediaCard;
     if (props.mode === MOVIES_MODE) {

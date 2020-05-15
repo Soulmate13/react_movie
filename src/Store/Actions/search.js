@@ -5,13 +5,20 @@ import {
     FAILURE
 } from '../constants';
 
-import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
+import {MOVIES_MODE, MOVIES_SEARCH_URL_PARTS, SERIES_MODE} from "../../Utils/constants";
 
 import axios from 'axios';
 import {searchActionGenerateUrl} from "../../Utils/functions";
 
+/**
+ * Takes search parameters and returns a function that makes a GET request for the movies or series that match the user input
+ * @param {object} searchParams - Contains parameter parts of the url and operating mode (movies or series)
+ * @returns {function}
+ */
+
 export function getSearched(searchParams) {
-    return async (dispatch, getState) => {
+
+    return async (dispatch) => {
         let actionType = null;
         switch (searchParams.mode) {
             case MOVIES_MODE:
@@ -29,9 +36,8 @@ export function getSearched(searchParams) {
         })
 
         try {
-            let url = searchActionGenerateUrl(searchParams)
+            let url = searchActionGenerateUrl(searchParams, MOVIES_SEARCH_URL_PARTS)
             const response = await axios.get(url);
-            console.log(response)
             dispatch({
                 type: SUCCESS(actionType),
                 payload: {list: [...response.data.results], prevSearchParams: {query : searchParams.query, year: searchParams.year, yearObj: searchParams.yearObj}, pageable: {page: response.data.page, total_results: response.data.total_results}}

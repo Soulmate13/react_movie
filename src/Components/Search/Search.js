@@ -48,6 +48,21 @@ class Search extends Component {
         }
     }
 
+    onSearch = () => {
+        if (this.state.query.length >= 2) {
+            const searchParams = this.generateSearchParams();
+            searchParams.page = 1;
+            this.props.getSearched(searchParams);
+        }
+    }
+
+    onChangeInput = (event) => {
+        const {name, value} = event.target;
+        let state = this.state;
+        state[name] = value;
+        this.setState(state);
+    }
+
     generateSearchParams = () => {
         return {
             page: "",
@@ -72,21 +87,6 @@ class Search extends Component {
             },this.state.query.length >= 2 ? this.onSearch : null)
         }
 
-    }
-
-    onSearch = () => {
-        if (this.state.query.length >= 2) {
-            const searchParams = this.generateSearchParams();
-            searchParams.page = 1;
-            this.props.getSearched(searchParams);
-        }
-    }
-
-    onChangeInput = (event) => {
-        const {name, value} = event.target;
-        let state = this.state;
-        state[name] = value;
-        this.setState(state);
     }
 
     onPageChange = (pageNum) => {
