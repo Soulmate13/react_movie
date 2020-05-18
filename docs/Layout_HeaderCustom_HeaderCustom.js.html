@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Home</title>
+  <title> Layout/HeaderCustom/HeaderCustom.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -87,33 +89,61 @@
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Title</p>
-                    <h1>Home</h1>
+                    <p>Source</p>
+                    <h1>Layout/HeaderCustom/HeaderCustom.js</h1>
                 </header>
                 
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react';
+import {Layout, Menu} from 'antd';
+import {
+    Link
+} from "react-router-dom";
 
+import '../../App.less';
 
-    <h3> </h3>
+const {Header} = Layout;
+const {SubMenu} = Menu;
 
+/**
+ * Header component which contains two submenues with links to different routes: movie discover/search and series discover/search
+ * @component
+ *
+ */
+function HeaderCustom() {
+    return (
+            &lt;Header className="header">
+                    &lt;span className="header-title">React Movie&lt;/span>
+                    &lt;Menu mode="horizontal" className="header-menu">
+                        &lt;SubMenu title="Movies" className="header-menu-item">
+                            &lt;Menu.Item>
+                                &lt;Link to={'/movie-discover'}>Discover popular&lt;/Link>
+                            &lt;/Menu.Item>
+                            &lt;Menu.Item>
+                                &lt;Link to={'/movie-search'}>Search&lt;/Link>
+                            &lt;/Menu.Item>
+                        &lt;/SubMenu>
+                        &lt;SubMenu title="Series" className="header-menu-item">
+                            &lt;Menu.Item>
+                                &lt;Link to={'/series-discover'}>Discover popular&lt;/Link>
+                            &lt;/Menu.Item>
+                            &lt;Menu.Item>
+                                &lt;Link to={'/series-search'}>Search&lt;/Link>
+                            &lt;/Menu.Item>
+                        &lt;/SubMenu>
+                    &lt;/Menu>
+            &lt;/Header>
+    );
+}
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+export default HeaderCustom;</code></pre>
+        </article>
+    </section>
 
 
 

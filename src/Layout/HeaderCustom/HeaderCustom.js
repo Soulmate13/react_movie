@@ -9,6 +9,11 @@ import '../../App.less';
 const {Header} = Layout;
 const {SubMenu} = Menu;
 
+/**
+ * Header component which contains two submenues with links to different routes: movie discover/search and series discover/search
+ * @component
+ *
+ */
 function HeaderCustom() {
     return (
             <Header className="header">

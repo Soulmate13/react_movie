@@ -1,6 +1,7 @@
 /**
  * Describes mode for searching or discovering movies
  * @constant
+ * @category SearchUtilities
  * @type {string}
  */
 export const MOVIES_MODE = "MOVIES_MODE"
@@ -8,6 +9,7 @@ export const MOVIES_MODE = "MOVIES_MODE"
 /**
  * Describes url parts to append to search movie parameters
  * @constant
+ * @category SearchUtilities
  * @type {object}
  * @property {string} route - The string, which starts the search url
  * @property {string} apiPath - The string, which is prepended to the api key
@@ -28,6 +30,7 @@ export const MOVIES_SEARCH_URL_PARTS = {
 /**
  * Describes url parts to append to discover movie parameters
  * @constant
+ * @category SearchUtilities
  * @type {object}
  * @property {string} route - The string, which starts the search url
  * @property {string} apiPath - The string, which is prepended to the api key
@@ -36,6 +39,7 @@ export const MOVIES_SEARCH_URL_PARTS = {
  * @property {string} otherSettings - The string, which contains other search parameters
  * @property {string} genres - The string, which is prepended to the genres parameter
  * @property {string} filterCriterion - The string, which is prepended to the filterCriterion parameter
+ * @meSearchUtilities
  */
 export const MOVIES_DISCOVER_URL_PARTS = {
     route:'https://api.themoviedb.org/3/discover/movie?',
@@ -50,6 +54,7 @@ export const MOVIES_DISCOVER_URL_PARTS = {
 /**
  * Describes url parts to append to single movie details parameters
  * @constant
+ * @category SearchUtilities
  * @type {object}
  * @property {string} route - The string, which starts the search url
  * @property {string} apiPath - The string, which is prepended to the api key
@@ -64,6 +69,7 @@ export const MOVIES_GET_DETAILS_URL_PARTS = {
 /**
  * Describes mode for searching or discovering series
  * @constant
+ * @category SearchUtilities
  * @type {string}
  */
 export const SERIES_MODE = "SERIES_MODE"
@@ -92,6 +98,7 @@ export const SERIES_SEARCH_URL_PARTS = {
 /**
  * Describes url parts to append to discover series parameters
  * @constant
+ * @category SearchUtilities
  * @type {object}
  * @property {string} route - The string, which starts the search url
  * @property {string} apiPath - The string, which is prepended to the api key
@@ -116,6 +123,7 @@ export const SERIES_DISCOVER_URL_PARTS = {
 /**
  * Describes url parts to append to single series details parameters
  * @constant
+ * @category SearchUtilities
  * @type {object}
  * @property {string} route - The string, which starts the search url
  * @property {string} apiPath - The string, which is prepended to the api key
@@ -129,9 +137,15 @@ export const SERIES_GET_DETAILS_URL_PARTS = {
 }
 
 /**
+ * Utility constants for filtering discover results
+ * @module FilterUtilities
+ */
+
+/**
  * Describes list of genres available for filtering
- * @type {Array.<{value: number, title: string}>}
  * @constant
+ * @memberOf module:FilterUtilities
+ * @type {Array.<{value: number, title: string}>}
  */
 
 export const genresList = [
@@ -215,8 +229,9 @@ export const genresList = [
 
 /**
  * Describes list of filters for movies and series
- * @type {Array.<{value: string, title: string}>}
  * @constant
+ * @memberOf module:FilterUtilities
+ * @type {Array.<{value: string, title: string}>}
  */
 
 export const filterCriteria = [

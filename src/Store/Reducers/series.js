@@ -10,6 +10,16 @@ import {
     FAILURE
 } from '../constants';
 
+/**
+ * Contains the initial state of the series entity
+ * @category Movies
+ * @property {object} singleSeries - Contains the initial state of the single movie
+ * @property {object} searchedSeries - Contains the initial state of the searched movies
+ * @property {object} popularSeries - Contains the initial state of the discovered popular movies
+ * @property {object} favouriteSeries - Contains the initial state of the favourite movies
+ * @constant
+ */
+
 const initialState = {
     singleSeries: {
         isFetching: false,
@@ -76,6 +86,15 @@ const initialState = {
     },
 
 }
+
+/**
+ * Calculates the next state of the movies entity and returns it
+ * @function ReducerFunctionSeries
+ * @category Movies
+ * @param {object} state - The initial state of the movies entity
+ * @param {object} action - Contains the action type and payload
+ * @returns {object} The next state of the movies entity
+ */
 
 export default function (state = initialState, action) {
     switch (action.type) {

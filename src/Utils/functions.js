@@ -3,12 +3,13 @@ import {
     SERIES_MODE,
 } from "./constants";
 
-
 /**
  * Takes url parameters and corresponding API strings and generates the request url via concatenation,
- * differentiating between movies and seres with the help of the mode parameter
+ * differentiating between movies and series with the help of the mode parameter
+ * @function
+ * @category SearchUrlGeneratorFunctions
  * @param {object} searchParams - Contains parameter parts of the url and operating mode (movies or series)
- * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url
+ * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url. See [SearchUtilities module]{@link module:SearchUtilities} for the description of the different URL parts
  * @returns {string} A concatenated string representing search url
  */
 
@@ -46,9 +47,11 @@ export function searchActionGenerateUrl(searchParams,SEARCH_URL_PARTS) {
 
 /**
  * Takes url parameters and corresponding API strings and generates the request url via concatenation,
- * differentiating between movies and seres with the help of the mode parameter
+ * differentiating between movies and series with the help of the mode parameter
+ * @function
+ * @category SearchUrlGeneratorFunctions
  * @param {object} searchParams - Contains parameter parts of the url and operating mode (movies or series)
- * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url
+ * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url. See [SearchUtilities module]{@link module:SearchUtilities} for the description of the different URL parts
  * @returns {string} A concatenated string representing discover url
  */
 
@@ -84,9 +87,11 @@ export function discoverActionGenerateUrl(searchParams,SEARCH_URL_PARTS) {
 
 /**
  * Takes url parameters and corresponding API strings and generates the request url via concatenation,
- * differentiating between movies and seres with the help of the mode parameter
+ * differentiating between movies and series with the help of the mode parameter
+ * @function
+ * @category SearchUrlGeneratorFunctions
  * @param {object} searchParams - Contains parameter parts of the url and operating mode (movies or series)
- * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url
+ * @param {object} SEARCH_URL_PARTS - Contains strings to prepend to parameter parts of the url. See [SearchUtilities module]{@link module:SearchUtilities} for the description of the different URL parts
  * @returns {string} A concatenated string representing details url
  */
 
