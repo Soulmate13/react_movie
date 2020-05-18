@@ -15,7 +15,6 @@ class Search extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: null,
             yearObj: null,
             query: "",
         }
@@ -30,14 +29,12 @@ class Search extends Component {
         switch (this.props.mode) {
             case MOVIES_MODE:
                 this.setState({
-                    year: this.props.movies.searchedMovies.prevSearchParams.year,
                     yearObj: this.props.movies.searchedMovies.prevSearchParams.yearObj,
                     query: this.props.movies.searchedMovies.prevSearchParams.query
                 })
                 break;
             case SERIES_MODE:
                 this.setState({
-                    year: this.props.series.searchedSeries.prevSearchParams.year,
                     yearObj: this.props.series.searchedSeries.prevSearchParams.yearObj,
                     query: this.props.series.searchedSeries.prevSearchParams.query
                 })
@@ -66,7 +63,7 @@ class Search extends Component {
     generateSearchParams = () => {
         return {
             page: "",
-            year: this.state.year,
+            year: moment(this.state.yearObj).format("YYYY"),
             yearObj: this.state.yearObj,
             query:this.state.query,
             mode: this.props.mode
@@ -76,13 +73,10 @@ class Search extends Component {
     changeYearHandler = (date) => {
         if (date === null) {
             this.setState({
-                year: "",
                 yearObj: null,
             }, this.state.query.length >= 2 ? this.onSearch : null)
         } else {
-            let year = moment(date).format('YYYY');
             this.setState({
-                year: year,
                 yearObj: date
             },this.state.query.length >= 2 ? this.onSearch : null)
         }

@@ -17,7 +17,6 @@ class Discover extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            year: null,
             yearObj: null,
             genres: [],
             filterCriterion: "popularity.desc"
@@ -33,7 +32,6 @@ class Discover extends Component {
         switch (this.props.mode) {
             case MOVIES_MODE:
                 this.setState({
-                    year: this.props.movies.popularMovies.prevSearchParams.year,
                     yearObj: this.props.movies.popularMovies.prevSearchParams.yearObj,
                     genres: this.props.movies.popularMovies.prevSearchParams.genres,
                     filterCriterion: this.props.movies.popularMovies.prevSearchParams.filterCriterion
@@ -41,7 +39,6 @@ class Discover extends Component {
                 break;
             case SERIES_MODE:
                 this.setState({
-                    year: this.props.series.popularSeries.prevSearchParams.year,
                     yearObj: this.props.series.popularSeries.prevSearchParams.yearObj,
                     genres: this.props.series.popularSeries.prevSearchParams.genres,
                     filterCriterion: this.props.series.popularSeries.prevSearchParams.filterCriterion
@@ -56,7 +53,7 @@ class Discover extends Component {
     generateSearchParams = () => {
         return {
             page: this.props.mode === MOVIES_MODE ? this.props.movies.popularMovies.pageable.page : this.props.series.popularSeries.pageable.page,
-            year: this.state.year,
+            year: moment(this.state.yearObj).format("YYYY"),
             yearObj: this.state.yearObj,
             genres: this.state.genres,
             filterCriterion: this.state.filterCriterion,
@@ -78,13 +75,10 @@ class Discover extends Component {
     changeYearHandler = (date) => {
         if (date === null) {
             this.setState({
-                year: "",
                 yearObj: null,
             }, this.onNewDiscover)
         } else {
-            let year = moment(date).format('YYYY');
             this.setState({
-                year: year,
                 yearObj: date
             },this.onNewDiscover)
         }
