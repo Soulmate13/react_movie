@@ -49,7 +49,6 @@ const initialState = {
         prevSearchParams : {
             query: "",
             year: null,
-            yearObj: null
         },
     },
     popularSeries: {
@@ -62,7 +61,6 @@ const initialState = {
         },
         prevSearchParams : {
             year: null,
-            yearObj: null,
             genres: [],
             filterCriterion:"popularity.desc"
         },

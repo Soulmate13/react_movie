@@ -43,7 +43,7 @@ export function getSearched(searchParams) {
             const response = await axios.get(url);
             dispatch({
                 type: SUCCESS(actionType),
-                payload: {list: [...response.data.results], prevSearchParams: {query : searchParams.query, year: searchParams.year, yearObj: searchParams.yearObj}, pageable: {page: response.data.page, total_results: response.data.total_results}}
+                payload: {list: [...response.data.results], prevSearchParams: {query : searchParams.query, year: searchParams.year}, pageable: {page: response.data.page, total_results: response.data.total_results}}
             })
 
             return {

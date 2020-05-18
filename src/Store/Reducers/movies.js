@@ -34,7 +34,6 @@ const initialState = {
         prevSearchParams : {
             query: "",
             year: null,
-            yearObj: null
         },
         list: [],
         pageable: {
@@ -52,7 +51,6 @@ const initialState = {
         },
         prevSearchParams : {
             year: null,
-            yearObj: null,
             genres: [],
             filterCriterion:"popularity.desc"
         },

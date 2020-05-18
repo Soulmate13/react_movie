@@ -17,7 +17,7 @@ class Discover extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            yearObj: null,
+            year: null,
             genres: [],
             filterCriterion: "popularity.desc"
         }
@@ -32,14 +32,14 @@ class Discover extends Component {
         switch (this.props.mode) {
             case MOVIES_MODE:
                 this.setState({
-                    yearObj: this.props.movies.popularMovies.prevSearchParams.yearObj,
+                    year: this.props.movies.popularMovies.prevSearchParams.year,
                     genres: this.props.movies.popularMovies.prevSearchParams.genres,
                     filterCriterion: this.props.movies.popularMovies.prevSearchParams.filterCriterion
                 }, this.onDiscover)
                 break;
             case SERIES_MODE:
                 this.setState({
-                    yearObj: this.props.series.popularSeries.prevSearchParams.yearObj,
+                    year: this.props.series.popularSeries.prevSearchParams.year,
                     genres: this.props.series.popularSeries.prevSearchParams.genres,
                     filterCriterion: this.props.series.popularSeries.prevSearchParams.filterCriterion
                 }, this.onDiscover)
@@ -53,8 +53,7 @@ class Discover extends Component {
     generateSearchParams = () => {
         return {
             page: this.props.mode === MOVIES_MODE ? this.props.movies.popularMovies.pageable.page : this.props.series.popularSeries.pageable.page,
-            year: moment(this.state.yearObj).format("YYYY"),
-            yearObj: this.state.yearObj,
+            year: moment(this.state.year).format("YYYY"),
             genres: this.state.genres,
             filterCriterion: this.state.filterCriterion,
             mode: this.props.mode
@@ -75,11 +74,11 @@ class Discover extends Component {
     changeYearHandler = (date) => {
         if (date === null) {
             this.setState({
-                yearObj: null,
+                year: null,
             }, this.onNewDiscover)
         } else {
             this.setState({
-                yearObj: date
+                year: date.format("YYYY")
             },this.onNewDiscover)
         }
     }
@@ -118,7 +117,7 @@ class Discover extends Component {
                         className="sider-menu"
                     >
                         <Menu.Item>
-                            <YearPicker onChange={this.changeYearHandler} value={this.state.yearObj ? moment(this.state.yearObj, 'YYYY') : null}/>
+                            <YearPicker onChange={this.changeYearHandler} value={this.state.year ? moment(this.state.year, 'YYYY') : null}/>
                         </Menu.Item>
                         <Menu.Item>
                            <Select placeholder="Select genres" mode="multiple" allowClear={false}  value={this.state.genres} style={{ width: '100%' }} showArrow={true} onSelect={this.onGenreAdd} onDeselect={this.onGenreRemove} optionFilterProp="key">
