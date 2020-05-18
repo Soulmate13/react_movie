@@ -5,7 +5,7 @@ import {
     FAILURE
 } from '../constants';
 
-import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
+import {MOVIES_DISCOVER_URL_PARTS, MOVIES_MODE, SERIES_DISCOVER_URL_PARTS, SERIES_MODE} from "../../Utils/constants";
 
 import axios from 'axios';
 import {discoverActionGenerateUrl} from "../../Utils/functions";
@@ -13,12 +13,15 @@ import {discoverActionGenerateUrl} from "../../Utils/functions";
 export function getPopular(searchParams) {
     return async (dispatch, getState) => {
         let actionType = null;
+        let URL_PARTS = null;
         switch (searchParams.mode) {
             case MOVIES_MODE:
                 actionType = GET_POPULAR_MOVIES;
+                URL_PARTS = MOVIES_DISCOVER_URL_PARTS;
                 break;
             case SERIES_MODE:
                 actionType = GET_POPULAR_SERIES;
+                URL_PARTS = SERIES_DISCOVER_URL_PARTS;
                 break;
             default:
                 break;
@@ -29,7 +32,7 @@ export function getPopular(searchParams) {
         })
 
         try {
-            let url = discoverActionGenerateUrl(searchParams)
+            let url = discoverActionGenerateUrl(searchParams, URL_PARTS)
             const response = await axios.get(url);
             console.log(response)
             dispatch({
