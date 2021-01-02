@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {DatePicker, Input, Layout, Menu, Pagination, Row} from 'antd';
 import '../../App.less';
 import FooterCustom from "../../Layout/ContentCustom/FooterCustom/FooterCustom";
-import {connect} from "react-redux";
 import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
 import MediaCard from "../MediaCard/MediaCard";
 import moment from "moment";
@@ -11,33 +11,36 @@ import {getSearched} from "../../Store/Actions/search";
 const {Content, Sider} = Layout;
 const {YearPicker} = DatePicker;
 
-class Search extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            year: null,
-            query: "",
+function Search(props) {
+
+    const [year, setYear] = React.useState(null);
+    const [query, setQuery] = React.useState("");
+
+    const dispatch = useDispatch();
+    const movies = useSelector(state => state.movies);
+    const series = useSelector(state => state.series);
+
+    React.useEffect(() => {
+        setPrevSearchParams();
+    },[])
+
+    React.useEffect(() => {
+        if (query.length >= 2) {
+            onSearch();
         }
+    }, [year])
 
-    }
 
-    componentDidMount() {
-        this.setPrevSearchParams();
-    }
-
-    setPrevSearchParams() {
-        switch (this.props.mode) {
+    const setPrevSearchParams = () => {
+        switch (props.mode) {
             case MOVIES_MODE:
-                this.setState({
-                    year: this.props.movies.searchedMovies.prevSearchParams.year,
-                    query: this.props.movies.searchedMovies.prevSearchParams.query
-                })
+                setYear(movies.searchedMovies.prevSearchParams.year);
+                setQuery(movies.searchedMovies.prevSearchParams.query);
+
                 break;
             case SERIES_MODE:
-                this.setState({
-                    year: this.props.series.searchedSeries.prevSearchParams.year,
-                    query: this.props.series.searchedSeries.prevSearchParams.query
-                })
+                setYear(series.searchedSeries.prevSearchParams.year);
+                setQuery(series.searchedSeries.prevSearchParams.query);
                 break;
             default:
                 break;
@@ -45,50 +48,43 @@ class Search extends Component {
         }
     }
 
-    onSearch = () => {
-        if (this.state.query.length >= 2) {
-            const searchParams = this.generateSearchParams();
+    const onSearch = () => {
+        if (query.length >= 2) {
+            const searchParams = generateSearchParams();
             searchParams.page = 1;
-            this.props.getSearched(searchParams);
+            dispatch(getSearched(searchParams));
         }
     }
 
-    onChangeInput = (event) => {
-        const {name, value} = event.target;
-        let state = this.state;
-        state[name] = value;
-        this.setState(state);
+    const onChangeInput = (event) => {
+        setQuery(event.target.value);
+        console.log(query);
     }
 
-    generateSearchParams = () => {
+    const generateSearchParams = () => {
         return {
             page: "",
-            year: moment(this.state.year).format("YYYY"),
-            query:this.state.query,
-            mode: this.props.mode
+            year: moment(year).format("YYYY"),
+            query: query,
+            mode: props.mode
         }
     }
 
-    changeYearHandler = (date) => {
+    const changeYearHandler = (date) => {
         if (date === null) {
-            this.setState({
-                year: null,
-            }, this.state.query.length >= 2 ? this.onSearch : null)
+          setYear(null);
         } else {
-            this.setState({
-                year: date.format("YYYY")
-            },this.state.query.length >= 2 ? this.onSearch : null)
+            setYear(date.format("YYYY"));
         }
 
     }
 
-    onPageChange = (pageNum) => {
-        const searchParams = this.generateSearchParams();
+    const onPageChange = (pageNum) => {
+        const searchParams = generateSearchParams();
         searchParams.page = pageNum;
-        this.props.getSearched(searchParams);
+        dispatch(getSearched(searchParams));
     }
 
-    render() {
         return (
             <Layout>
                 <Sider width={200} className="site-layout-background">
@@ -97,7 +93,7 @@ class Search extends Component {
                         style={{height: '100%', borderRight: 0}}
                     >
                         <Menu.Item>
-                            <YearPicker onChange={this.changeYearHandler} value={this.state.year ? moment(this.state.year, "YYYY") : null}/>
+                            <YearPicker onChange={changeYearHandler} value={year ? moment(year, "YYYY") : null}/>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -105,33 +101,33 @@ class Search extends Component {
                     <Content
                         className="site-layout-background content-section"
                     >
-                        <p>Search {this.props.mode === MOVIES_MODE ? "Movies" : "Series"}</p>
-                        <Input.Search name="query" className='search-field' value={this.state.query}
-                                      onChange={this.onChangeInput} enterButton onSearch={this.onSearch}/>
+                        <p>Search {props.mode === MOVIES_MODE ? "Movies" : "Series"}</p>
+                        <Input.Search name="query" className='search-field' value={query}
+                                      onChange={onChangeInput} enterButton onSearch={onSearch}/>
 
                         <Row gutter={[16]}>
-                            {this.props.mode === MOVIES_MODE ? this.props.movies.searchedMovies.list.map(singleMovie => {
-                                    return <MediaCard key={singleMovie.id} data={singleMovie} mode={this.props.mode}/>
+                            {props.mode === MOVIES_MODE ? movies.searchedMovies.list.map(singleMovie => {
+                                    return <MediaCard key={singleMovie.id} data={singleMovie} mode={props.mode}/>
                                 })
                                 :
-                                this.props.series.searchedSeries.list.map(singleMovie => {
-                                    return <MediaCard key={singleMovie.id} data={singleMovie} mode={this.props.mode}/>
+                                series.searchedSeries.list.map(singleMovie => {
+                                    return <MediaCard key={singleMovie.id} data={singleMovie} mode={props.mode}/>
                                 })
                             }
                         </Row>
-                        {   this.props.mode === MOVIES_MODE &&
-                            this.props.movies.searchedMovies.list && this.props.movies.searchedMovies.pageable.total_results > 20 ?
-                            <Pagination current={this.props.movies.searchedMovies.pageable.page} pageSize={20}
-                                            total={this.props.movies.searchedMovies.pageable.total_results}
-                                            onChange={this.onPageChange} showSizeChanger={false}/>
+                        {   props.mode === MOVIES_MODE &&
+                            movies.searchedMovies.list && movies.searchedMovies.pageable.total_results > 20 ?
+                            <Pagination current={movies.searchedMovies.pageable.page} pageSize={20}
+                                            total={movies.searchedMovies.pageable.total_results}
+                                            onChange={onPageChange} showSizeChanger={false}/>
                                 :
                                 null
                         }
-                        {this.props.mode === SERIES_MODE &&
-                            this.props.series.searchedSeries.list && this.props.series.searchedSeries.pageable.total_results > 20 ?
-                                <Pagination current={this.props.series.searchedSeries.pageable.page} pageSize={20}
-                                            total={this.props.series.searchedSeries.pageable.total_results}
-                                            onChange={this.onPageChange} showSizeChanger={false}/>
+                        {props.mode === SERIES_MODE &&
+                            series.searchedSeries.list && series.searchedSeries.pageable.total_results > 20 ?
+                                <Pagination current={series.searchedSeries.pageable.page} pageSize={20}
+                                            total={series.searchedSeries.pageable.total_results}
+                                            onChange={onPageChange} showSizeChanger={false}/>
                                 :
                                 null
                         }
@@ -141,21 +137,8 @@ class Search extends Component {
                 </Layout>
             </Layout>
         );
-    }
 
 
 }
 
-function mapStateToProps(state, ownProps) {
-    return {
-        movies: state.movies,
-        series: state.series,
-        ownProps,
-    }
-}
-
-const mapDispatchToProps = {
-    getSearched,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;
