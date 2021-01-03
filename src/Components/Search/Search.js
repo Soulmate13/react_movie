@@ -34,12 +34,11 @@ function Search(props) {
     const setPrevSearchParams = () => {
         switch (props.mode) {
             case MOVIES_MODE:
-                setYear(movies.searchedMovies.prevSearchParams.year);
-                setQuery(movies.searchedMovies.prevSearchParams.query);
-
+            movies.searchedMovies.prevSearchParams.year ? setYear(moment(movies.searchedMovies.prevSearchParams.year, "YYYY")) : setYear(null);
+            setQuery(movies.searchedMovies.prevSearchParams.query);
                 break;
             case SERIES_MODE:
-                setYear(series.searchedSeries.prevSearchParams.year);
+                series.searchedSeries.prevSearchParams.year ? setYear(moment(series.searchedSeries.prevSearchParams.year, "YYYY")) : setYear(null);
                 setQuery(series.searchedSeries.prevSearchParams.query);
                 break;
             default:
@@ -58,23 +57,33 @@ function Search(props) {
 
     const onChangeInput = (event) => {
         setQuery(event.target.value);
-        console.log(query);
     }
 
     const generateSearchParams = () => {
-        return {
-            page: "",
-            year: moment(year).format("YYYY"),
-            query: query,
-            mode: props.mode
+
+        if (year) {
+            return {
+                page: "",
+                year: moment(year).format("YYYY"),
+                query: query,
+                mode: props.mode
+            }
+        } else  {
+            return {
+                page: "",
+                query: query,
+                mode: props.mode
+            }
         }
+
+
     }
 
     const changeYearHandler = (date) => {
-        if (date === null) {
-          setYear(null);
-        } else {
+        if (date) {
             setYear(date.format("YYYY"));
+        } else {
+            setYear(null);
         }
 
     }
@@ -93,7 +102,7 @@ function Search(props) {
                         style={{height: '100%', borderRight: 0}}
                     >
                         <Menu.Item>
-                            <YearPicker onChange={changeYearHandler} value={year ? moment(year, "YYYY") : null}/>
+                            <YearPicker onChange={changeYearHandler} value={year ? moment(year, 'YYYY') : null}/>
                         </Menu.Item>
                     </Menu>
                 </Sider>
@@ -102,8 +111,8 @@ function Search(props) {
                         className="site-layout-background content-section"
                     >
                         <p>Search {props.mode === MOVIES_MODE ? "Movies" : "Series"}</p>
-                        <Input.Search name="query" className='search-field' value={query}
-                                      onChange={onChangeInput} enterButton onSearch={onSearch}/>
+                            <Input.Search placeholder="search" name="query" className='search-field' value={query}
+                                          onChange={onChangeInput} enterButton onSearch={onSearch} allowClear={true}/>
 
                         <Row gutter={[16]}>
                             {props.mode === MOVIES_MODE ? movies.searchedMovies.list.map(singleMovie => {
