@@ -121,7 +121,7 @@ export const getSingleSeriesSuccess = (payload: IGetSinglePayload) => ({
 
 export const getSingleMovieFailure = () => ({
     type: FAILURE(GET_SINGLE_MOVIE)
-} as const)
+})
 
 export const getSingleSeriesFailure = () => ({
     type: FAILURE(GET_SINGLE_SERIES),
