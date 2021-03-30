@@ -1,25 +1,31 @@
 import React from 'react';
 import '../../App.less';
-import {Switch, Route, Redirect} from "react-router-dom";
+import {Switch, Route, Redirect, RouteComponentProps} from "react-router-dom";
+import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
+import MediaCardLargeMovie from "../../Components/MediaCardLargeMovie/MediaCardLargeMovie";
+import MediaCardLargeSeries from "../../Components/MediaCardLargeSeries/MediaCardLargeSeries";
+import SearchMovies from "../../Components/SearchMovies/SearchMovies";
+import SearchSeries from "../../Components/SearchSeries/SearchSeries";
+import DiscoverMovies from "../../Components/DiscoverMovies/DiscoverMovies";
+import DiscoverSeries from "../../Components/DiscoverSeries/DiscoverSeries";
 
-import {MovieDiscover} from "../../Views/views";
-import {MovieSearch} from "../../Views/views";
-import {SeriesDiscover} from "../../Views/views";
-import {SeriesSearch} from "../../Views/views";
-import {SingleMovie} from "../../Views/views";
-import {SingleSeries} from "../../Views/views";
+export interface MatchParams {
+    id: string
+}
+
+export interface MatchProps extends RouteComponentProps<MatchParams> {}
 
 export const ContentCustom: React.FC = () => {
     return (
         <Switch>
-            <Route path={'/movie-discover'} component={MovieDiscover}/>
-            <Route path={'/movie-search'} component={MovieSearch}/>
+            <Route exact path={'/movie-discover'} render={props => <DiscoverMovies {...props} mode={MOVIES_MODE} />}/>
+            <Route exact path={'/movie-search'} render={props => <SearchMovies {...props} mode={MOVIES_MODE} />}/>
 
-            <Route path={'/series-discover'} component={SeriesDiscover}/>
-            <Route path={'/series-search'} component={SeriesSearch}/>
+            <Route exact path={'/series-discover'} render={props => <DiscoverSeries {...props} mode={SERIES_MODE} />}/>
+            <Route exact path={'/series-search'} render={props => <SearchSeries {...props} mode={SERIES_MODE} />}/>
 
-            <Route path={'/movie/:id'} render={props => <SingleMovie {...props}/>}/>
-            <Route path={'/series/:id'} render={props => <SingleSeries {...props}/>}/>
+            <Route exact path={'/movie/:id'} render={({match}: MatchProps) => <MediaCardLargeMovie mode={MOVIES_MODE} id={match.params.id} />}/>
+            <Route exact path={'/series/:id'} render={({match}: MatchProps) => <MediaCardLargeSeries mode={SERIES_MODE} id={match.params.id}/>}/>
 
             <Route path={'/'} render={() => <Redirect to='/movie-discover'/>}/>
         </Switch>

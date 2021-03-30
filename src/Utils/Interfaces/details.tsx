@@ -2,7 +2,7 @@ import {ModeType} from "./interfaces";
 
 export interface IGetDetailsParams {
     id: string,
-    mode: ModeType
+    mode?: ModeType
 }
 
 export interface IGetDetailsUrlParts {

@@ -15,21 +15,22 @@ export interface ISeriesInitialState {
     readonly favouriteSeries: IFavouriteSeries,
 }
 
-interface ISingleSeries {
+export interface ISingleSeries {
     readonly isFetching: boolean,
     readonly didInvalidate: boolean,
     readonly data: ISingleSeriesData
 }
 
-interface ISearchedSeries {
+export interface ISearchedSeries {
     readonly isFetching: boolean,
     readonly didInvalidate: boolean,
     readonly list: Array<ISeriesListItem>,
+    readonly suggestedNames: Array<{ value: string, key: number  }>,
     readonly pageable: IPageable,
     readonly prevSearchParams: ISearchedPrevSearchParams,
 }
 
-interface IPopularSeries {
+export interface IPopularSeries {
     readonly isFetching: boolean,
     readonly didInvalidate: boolean,
     readonly list: Array<ISeriesListItem>,

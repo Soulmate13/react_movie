@@ -21,15 +21,16 @@ export interface ISingleMovie {
     readonly data: ISingleMovieData
 }
 
-interface ISearchedMovies {
+export interface ISearchedMovies {
     readonly isFetching: boolean,
     readonly didInvalidate: boolean,
     readonly list: Array<IMoviesListItem>,
     readonly pageable: IPageable,
     readonly prevSearchParams: ISearchedPrevSearchParams,
+    readonly suggestedNames: Array<{ value: string, key: number  }>,
 }
 
-interface IPopularMovies {
+export interface IPopularMovies {
     readonly isFetching: boolean,
     readonly didInvalidate: boolean,
     readonly list: Array<IMoviesListItem>,

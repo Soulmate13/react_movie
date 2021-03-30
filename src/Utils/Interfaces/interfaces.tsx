@@ -3,15 +3,15 @@ import {ThunkAction} from "redux-thunk";
 import {RootState} from "../../Store/Reducers";
 
 export interface IGenre {
-    id?: number,
-    name?: string
+    id: number,
+    name: string
 }
 
-export type ModeType = "MOVIES_MODE" | "SERIES_MODE";
+export type ModeType = "MOVIES_MODE" | "SERIES_MODE" ;
 
 
 export interface ISearchedPrevSearchParams {
-    query: string | number,
+    query: string,
     year?: string | null,
     page?: number
 }

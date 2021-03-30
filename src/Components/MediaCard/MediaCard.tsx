@@ -1,55 +1,58 @@
-import React, {SyntheticEvent} from 'react';
+import React from 'react';
 import '../../App.less';
 import {Col} from "antd";
-import errorImage from '../../Assets/error-image.jpg'
 import {MOVIES_MODE, SERIES_MODE} from "../../Utils/constants";
 import {Link} from "react-router-dom";
 import {IMoviesListItem} from "../../Utils/Interfaces/movies";
 import {ISeriesListItem} from "../../Utils/Interfaces/series";
 import {ModeType} from "../../Utils/Interfaces/interfaces";
-
-const imageSrc = 'https://image.tmdb.org/t/p/w300/'
+import {PosterImage} from "../PosterImage/PosterImage";
+import {onImageError} from '../../Utils/functions'
 
 export interface IMediaCardProps {
-    mode : ModeType,
-    key: number | undefined,
+    mode?: ModeType,
+    key?: number,
     data: ISeriesListItem & IMoviesListItem
 }
 
+
 export const MediaCard = (props: IMediaCardProps) => {
 
-    const onError = (event: SyntheticEvent<HTMLImageElement, Event>) => {
-        event.currentTarget.src = errorImage;
-    }
-
     let mediaCard;
+
     if (props.mode === MOVIES_MODE) {
         mediaCard = (
-            <div>
-                <img className="poster-image"
-                     src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
-                     onError={onError} alt="movie poster"/>
-                <h2><Link to={`/movie/${props.data.id}`}>{props.data.title}</Link></h2>
-                <p>{props.data.release_date}</p>
-            </div>
+            <Col xxl={{span: 6}} lg={{span: 8}} md={{span: 12}} span={24}>
+                <div className="movie-card">
+                    <PosterImage imageSrc={props.data.poster_path} errorHandler={onImageError}/>
+                    <h2 className="card-heading"><Link
+                        to={`/movie/${props.data.id}`}
+                        className="card-link">{props.data.title ? props.data.title : 'Title Unavailable'}</Link>
+                    </h2>
+                    <p className="card-date">{props.data.release_date ? props.data.release_date : 'Date Unavailable'}</p>
+                </div>
+            </Col>
         )
     } else if (props.mode === SERIES_MODE) {
         mediaCard = (
-            <div>
-                <img className="poster-image"
-                     src={props.data.poster_path ? imageSrc + props.data.poster_path : errorImage}
-                     onError={onError} alt="movie poster"/>
-                <h2><Link to={`/series/${props.data.id}`}>{props.data.name}</Link></h2>
-                <p>{props.data.first_air_date}</p>
-            </div>
+            <Col xxl={{span: 6}} lg={{span: 8}} md={{span: 12}} span={24}>
+                <div className="series-card">
+                    <PosterImage imageSrc={props.data.poster_path} errorHandler={onImageError}/>
+                    <h2 className="card-heading"><Link
+                        to={`/series/${props.data.id}`}
+                        className="card-link">{props.data.name ? props.data.name : "Title Unavailable"}</Link>
+                    </h2>
+                    <p className="card-date">{props.data.first_air_date ? props.data.first_air_date : 'Date Unavailable'}</p>
+                </div>
+            </Col>
         )
     } else {
         mediaCard = null;
     }
 
     return (
-        <Col xxl={{span: 6}} lg={{span: 8}} md={{span: 12}} span={24}>
+        <>
             {mediaCard}
-        </Col>
+        </>
     );
 }

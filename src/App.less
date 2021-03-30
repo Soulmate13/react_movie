@@ -56,3 +56,49 @@
     min-height: 40px;
     height: auto;
 }
+
+.custom-spinner {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.not-found {
+    display: flex;
+    justify-content: center;
+    padding-top: 150px;
+    font-size: 36px;
+}
+
+
+.search-wrapper {
+    position: relative;
+    max-width: 500px;
+
+    .autosuggest-list {
+        padding-left: 0;
+        list-style: none;
+        max-width: 454px;
+        width: 100%;
+        background-color: #fff;
+        position: absolute;
+        top: 32px;
+        left: 0;
+        z-index: 100;
+
+        .list-item {
+            padding: 5px 11px;
+
+            &:hover {
+                background-color: #ccc;
+                cursor: pointer;
+            }
+
+            &.active {
+                background-color: #1890ff;
+            }
+        }
+
+    }
+}

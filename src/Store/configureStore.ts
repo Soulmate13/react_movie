@@ -19,7 +19,5 @@ if (DEV && module.hot) {
     })
 }
 
-export type AppDispatch = ReturnType<typeof configureStore>["dispatch"]
+export type AppDispatch = typeof store.dispatch
 export default store;
-
-
